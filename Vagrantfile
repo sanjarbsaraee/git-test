@@ -7,16 +7,14 @@ Vagrant.configure("2") do |config|                              # Use Vagrant ve
     vb.cpus = 1                                                 # CPU cores
   end
 
-  # --- VM 1: Ansible Control Node --- #
-  config.vm.define "ansible" do |ctrl|
-    ctrl.vm.hostname = "ansible-ctrl"
-    ctrl.vm.network "private_network", ip: "192.168.99.10"      # Add a static, private IP
+  # --- VM 1: Node --- #
+  config.vm.define "vm-git-test" do |vm|
+    vm.vm.hostname = "vm-git-test"
+    vm.vm.network "private_network", ip: "192.168.99.10"      # Add a static, private IP
 
     # Automation: Provisioning scripts
-    ctrl.vm.provision "shell", inline: <<-SHELL
-      apt-get update                                            # Update packages
-      apt-get install -y ansible                                # Start Apache
-      echo "=== Ansible Initialized ==="
+    vm.vm.provision "shell", inline: <<-SHELL
+      git clone https://github.com/sanjarbsaraee/git-test.git
     SHELL
   end
 
